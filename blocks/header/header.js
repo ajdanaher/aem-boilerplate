@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { loadNavContent, attachListners } from './headerUtilities.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -147,66 +148,5 @@ export default async function decorate(block) {
   block.append(navWrapper);
 
   loadNavContent();
-}
-
-const getRemoteData = url => new Promise(async(resolve, reject) => {
-  try {
-    const p = await fetch(url);
-    const data = await p.json();
-    resolve(data);
-  } catch (e) {
-    console.error(`url is ${url}.`);
-    console.error(e.message);
-    reject(e);
-  }
-});
-
-const getSubCatagoryContent = data => new Promise (async (resolve, reject) => {
-  const subCatagory = [];
-  for(const item of data.data) {
-    let name = '';
-    if (item.Destination.indexOf(' | ') !== -1) {
-      name = item.Destination.split(' | ')[1];
-    } else if (item.Destination.search(/\/helix-.+.json$/) !== -1) {
-      name = item.Destination;
-    } else {
-      continue;
-    }
-
-    try {
-      const remoteData = await getRemoteData(name.toLowerCase());
-      subCatagory.push({
-        name,
-        'data': remoteData
-      });
-    } catch (e) {
-      console.error(e);
-      reject(e);
-    }
-  }
-  resolve(subCatagory);
-});
-
-const getContentByCatatories = (menu, submenu) => new Promise(async (resolve, reject) => {
-  try {
-    const fileName = `/helix-${menu}-${submenu}.json`;
-    const data = await getRemoteData(fileName);
-    const subCatagory = await getSubCatagoryContent(data);
-    resolve({
-      data,
-      subCatagory
-    });
-  } catch (e) {
-    console.error(e);
-    reject(e);
-  }
-});
-
-async function loadNavContent() {
-  try {
-    const content = await getContentByCatatories('sports', 'baseball');
-    console.log(content);
-  } catch(e) {
-    console.error(e);
-  }
+  attachListners();
 }

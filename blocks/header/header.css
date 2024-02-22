@@ -217,6 +217,7 @@ header nav .nav-sections ul > li > ul > li {
     border: 2px solid currentcolor;
     border-radius: 0 1px 0 0;
     border-width: 2px 2px 0 0;
+    /* color: red; */
   }
 
   header nav .nav-sections .nav-drop[aria-expanded="true"]::after {
@@ -229,7 +230,7 @@ header nav .nav-sections ul > li > ul > li {
     display: flex;
     gap: 2em;
     margin: 0;
-    font-size: var(--body-font-size-xs);
+    font-size: 1rem;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
@@ -282,4 +283,11 @@ header nav .nav-tools {
 
 .hide {
   display: none;
+}
+
+.nav-underline {
+  border-style: solid;
+  border-left: none;
+  border-top: none;
+  border-right: none;
 }
