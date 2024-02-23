@@ -249,7 +249,21 @@ header nav .nav-sections ul > li > ul > li {
     overflow: hidden;
     position: fixed;
     left: 0;
-    width: 100vw;
+    width: 12%;
+    margin-top: 1rem;
+    padding: 1em;
+    background-color: var(--light-color);
+    white-space: initial;
+    opacity: 1;
+    box-shadow: 0 0.3rem 0.3rem 0 #d9d9d9;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"] > nav {
+    display: block;
+    overflow: hidden;
+    position: fixed;
+    right: 12%;
+    width: 88%;
     margin-top: 1rem;
     padding: 1em;
     background-color: var(--light-color);
@@ -259,6 +273,18 @@ header nav .nav-sections ul > li > ul > li {
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid var(--light-color);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > nav::before {
     content: '';
     position: absolute;
     top: -8px;
@@ -290,4 +316,10 @@ header nav .nav-tools {
   border-left: none;
   border-top: none;
   border-right: none;
+}
+
+.subnav-detail-position {
+  position: relative;
+  left: 13%;
+  height: 28rem;
 }
