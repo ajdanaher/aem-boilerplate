@@ -19,11 +19,82 @@ async function updateDomForContent (div, menu, subMenu) {
     if(menu === 'sports' && subMenu === 'baseball') {
       //const element = document.createElement('div');
       populateSportsBaseball(div, data.data, subCatagory);
-      div.appendChild(element);
+      //div.appendChild(element);
     }
   } catch (e) {
     console.error(e);
   }
+}
+
+function createAnchorElement (text, destination, classNames) {
+  const element = document.createElement('a');
+  element.innerText = text;
+  element.setAttribute('href', destination);
+  element.classList.add(...classNames);
+  return element;
+}
+
+function populateSportsBaseballCol1Section1 (element, data, subCatagory) {
+  for(let i=0; i<=3; ++i) {
+    const obj = data[i];
+    const classes = ['section-margin-1'];
+    if(i === 0) {
+      classes.push('main-subnav');
+    }
+    const elementAnch = createAnchorElement(obj.Source, obj.Destination, classes);
+    element.appendChild(elementAnch);
+  }
+}
+
+function  populateSports_Baseball_Col1_OtherSections(section, data) {
+  data.forEach(obj => {
+    const element = createAnchorElement(obj.Source, obj.Destination, ['section-margin-2']);
+    section.appendChild(element);
+  })
+}
+
+function populateSportsBaseballCol1(element, data, subCatagory) {
+  const section1 = document.createElement('div');
+  section1.id = 'sports-baseball-section1';
+  section1.classList.add('subnav-detail-section-col');
+  populateSportsBaseballCol1Section1(section1, data, subCatagory);
+  element.appendChild(section1);
+
+  const section2 = document.createElement('div');
+  section2.id = 'sports-baseball-section2';
+  section2.classList.add('subnav-detail-section-col');
+  const sp1 = document.createElement('span');
+  sp1.innerText = data[4].Source;
+  sp1.classList.add('section-margin-1');
+  section2.appendChild(sp1);
+
+  let sectionDataName = `/helix-${data[4].Source.replaceAll(' ', '-')}.json`;
+  let dataObjects = subCatagory.filter(e => e.name === sectionDataName)[0].data.data;
+  populateSports_Baseball_Col1_OtherSections(section2, dataObjects)
+  element.appendChild(section2);
+
+  const section3 = document.createElement('div');
+  section3.id = 'sports-baseball-section3';
+  section3.classList.add('subnav-detail-section-col');
+  element.appendChild(section3);
+
+  const sp2 = document.createElement('span');
+  sp2.innerText = data[5].Source;
+  sp2.classList.add('section-margin-1');
+  section3.appendChild(sp2);
+
+  sectionDataName = `/helix-${data[5].Source.replaceAll(' ', '-')}.json`;
+  dataObjects = subCatagory.filter(e => e.name === sectionDataName)[0].data.data;
+  populateSports_Baseball_Col1_OtherSections(section3, dataObjects)
+  element.appendChild(section3);
+}
+
+function populateSportsBaseballCol2(element, data, subCatagory) {
+  
+}
+
+function populateSportsBaseballCol3(element, data, subCatagory) {
+  
 }
 
 function populateSportsBaseball (element, data, subCatagory) {
@@ -32,12 +103,15 @@ function populateSportsBaseball (element, data, subCatagory) {
 
   const col1 = document.createElement('div');
   col1.classList.add('subnav-detail-col');
+  populateSportsBaseballCol1(col1, data, subCatagory);
 
   const col2 = document.createElement('div');
   col2.classList.add('subnav-detail-col');
+  //populateSportsBaseballCol2(col1, data, subCatagory);
 
   const col3 = document.createElement('div');
   col3.classList.add('subnav-detail-col');
+  //populateSportsBaseballCol3(col1, data, subCatagory);
 
   element.appendChild(col1);
   element.appendChild(col2);

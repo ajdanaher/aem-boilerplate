@@ -343,8 +343,34 @@ header nav .nav-tools {
 }
 
 .subnav-detail-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  row-gap: 1rem;
   width: 30%;
   height: 26rem;
   border: solid black 1px;
 }
 
+.subnav-detail-section-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+/* .subnav-detail-col a:link {
+  text-decoration: none;
+} */
+
+.section-margin-1 {
+  margin-left: 1rem;
+}
+
+.section-margin-2 {
+  margin-left: 2rem;
+  font-size: smaller;
+}
+
+.main-subnav {
+  font-size: larger;
+}
