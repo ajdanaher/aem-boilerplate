@@ -103,6 +103,9 @@ function populateSportsBaseballCol2(element, data, subCatagory) {
   section1.id = 'sports-baseball-section1-col2';
   section1.classList.add('subnav-detail-section-col');
   populateSportsBaseballCol2Section1(section1, data, subCatagory);
+  const sectionChildren = section1.children;
+  const dealChild = sectionChildren[section1.childElementCount -1];
+  dealChild.classList.add('red-font');
   element.appendChild(section1);
 
   const section2 = document.createElement('div');
@@ -115,9 +118,21 @@ function populateSportsBaseballCol2(element, data, subCatagory) {
 
   let sectionDataName = `/helix-${data[13].Source.replaceAll(' ', '-')}.json`;
   let dataObjects = subCatagory.filter(e => e.name === sectionDataName)[0].data.data;
-  populateSports_Baseball_Col1_OtherSections(section2, dataObjects)
+  populateSports_Baseball_Col1_OtherSections(section2, dataObjects);
   element.appendChild(section2);
 
+  const section3 = document.createElement('div');
+  section3.id = 'sports-baseball-section3-col2';
+  section3.classList.add('subnav-detail-section-col');
+  const sp2 = document.createElement('span');
+  sp2.innerText = data[14].Source;
+  sp2.classList.add('section-margin-1');
+  section3.appendChild(sp2);
+
+  sectionDataName = `/helix-${data[14].Source.replaceAll(' ', '-')}.json`;
+  dataObjects = subCatagory.filter(e => e.name === sectionDataName)[0].data.data;
+  populateSports_Baseball_Col1_OtherSections(section3, dataObjects);
+  element.appendChild(section3);
 
 }
 
@@ -144,7 +159,6 @@ function populateSportsBaseball (element, data, subCatagory) {
   element.appendChild(col1);
   element.appendChild(col2);
   element.appendChild(col3);
-
 }
 
 const getRemoteData = url => new Promise(async(resolve, reject) => {
