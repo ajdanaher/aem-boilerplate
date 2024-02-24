@@ -89,8 +89,36 @@ function populateSportsBaseballCol1(element, data, subCatagory) {
   element.appendChild(section3);
 }
 
+function populateSportsBaseballCol2Section1 (element, data, subCatagory) {
+  for(let i=6; i<=12; ++i) {
+    const obj = data[i];
+    const classes = ['section-margin-1'];
+    const elementAnch = createAnchorElement(obj.Source, obj.Destination, classes);
+    element.appendChild(elementAnch);
+  }
+}
+
 function populateSportsBaseballCol2(element, data, subCatagory) {
-  
+  const section1 = document.createElement('div');
+  section1.id = 'sports-baseball-section1-col2';
+  section1.classList.add('subnav-detail-section-col');
+  populateSportsBaseballCol2Section1(section1, data, subCatagory);
+  element.appendChild(section1);
+
+  const section2 = document.createElement('div');
+  section2.id = 'sports-baseball-section2-col2';
+  section2.classList.add('subnav-detail-section-col');
+  const sp1 = document.createElement('span');
+  sp1.innerText = data[13].Source;
+  sp1.classList.add('section-margin-1');
+  section2.appendChild(sp1);
+
+  let sectionDataName = `/helix-${data[13].Source.replaceAll(' ', '-')}.json`;
+  let dataObjects = subCatagory.filter(e => e.name === sectionDataName)[0].data.data;
+  populateSports_Baseball_Col1_OtherSections(section2, dataObjects)
+  element.appendChild(section2);
+
+
 }
 
 function populateSportsBaseballCol3(element, data, subCatagory) {
@@ -107,7 +135,7 @@ function populateSportsBaseball (element, data, subCatagory) {
 
   const col2 = document.createElement('div');
   col2.classList.add('subnav-detail-col');
-  //populateSportsBaseballCol2(col1, data, subCatagory);
+  populateSportsBaseballCol2(col2, data, subCatagory);
 
   const col3 = document.createElement('div');
   col3.classList.add('subnav-detail-col');
