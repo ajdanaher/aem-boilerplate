@@ -1,6 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
-import { loadNavContent, attachListners } from './headerUtilities.js';
+import { updateDomForNav } from './headerUtils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -147,6 +147,8 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 
-  loadNavContent();
-  attachListners();
+  //loadNavContent();
+  //attachListners();
+  updateDomForNav();
+
 }
