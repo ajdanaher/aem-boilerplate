@@ -1,4 +1,4 @@
-
+import { loadFragment } from "../fragment/fragment.js";
 
 export function updateDomForNav() {
   const ulElement = document.querySelector('header nav .nav-sections .default-content-wrapper > ul');
@@ -136,8 +136,16 @@ function populateSportsBaseballCol2(element, data, subCatagory) {
 
 }
 
-function populateSportsBaseballCol3(element, data, subCatagory) {
-  
+async function populateSportsBaseballCol3(element, data, subCatagory) {
+  const path = '/sports-baseball-images';
+  try {
+    const fragment = await loadFragment(path);
+    const imageDiv = fragment.getElementsByClassName('library-metadata block')[0];
+    element.appendChild(imageDiv);
+  } catch (e) {
+    console.error(e);
+  }
+
 }
 
 function populateSportsBaseball (element, data, subCatagory) {
