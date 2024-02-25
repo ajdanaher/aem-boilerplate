@@ -148,7 +148,7 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 128px;
+  width: 48px;
   height: auto;
 }
 
@@ -272,4 +272,36 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+/* Feb 24  */
+.nav-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: none;
+  height: auto;
+  width: 100%;
+  background-color: var(--background-color);
+}
+
+.flex-item {
+  display: flex;
+  flex-wrap: column;
+  gap: none;
+
+  background: tomato;
+  padding: 5px;
+  width: 200px;
+  height: 150px;
+  margin-top: none;
+  line-height: 150px;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+
+.hide-flex {
+  display: none !important;
 }
