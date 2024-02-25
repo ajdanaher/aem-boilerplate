@@ -42,7 +42,7 @@ function attachListnerForSectionDisplay () {
       if(isClassPresentOnElement(navSection, 'hide-flex')) {
         navSection.classList.remove('hide-flex');
       }
-      handleMouseoverOnNav(liElement.innerText.trim());
+      handleMouseoverOnNav(liElement);
     });
   }
 }
@@ -51,6 +51,80 @@ function isClassPresentOnElement(element, className) {
   return element.classList.value.split(' ').find(name => name === className) !== undefined;
 }
 
-function handleMouseoverOnNav (elementName) {
-  console.log(elementName);
+function handleMouseoverOnNav (navElement) {
+  const name = navElement.innerText.trim();
+  const ul = navElement.children[0];
+  const catagoryNames = [];
+  for(const child of ul.children) {
+    catagoryNames.push(child.innerText.trim());
+  }
+  populateSubnav1Col1(catagoryNames);
+  populateSubnav1Col2(catagoryNames);
+  populateSubnav1Col3(catagoryNames);
+  populateSubnav1Col4(catagoryNames);
+
+}
+
+function populateSubnav1Col1 (catagoryList) {
+  const section = document.getElementById('subnanav-list-col1');
+  while (section.firstChild) {
+    section.removeChild(section.lastChild);
+  }
+  catagoryList.forEach(catagory => {
+    const sp = document.createElement('span');
+    sp.innerText = catagory;
+    sp.classList.add('col1-sp');
+    section.append(sp);
+    sp.addEventListener('mouseover', eventTarget => {
+      if(!isClassPresentOnElement(sp, 'sp-mouseover')) {
+        sp.classList.add('sp-mouseover');
+      }
+      populateRightSidePanel(catagoryName, subCatagoryName);
+    });
+    sp.addEventListener('mouseleave', eventTarget => {
+      if(isClassPresentOnElement(sp, 'sp-mouseover')) {
+        sp.classList.remove('sp-mouseover');
+      }
+    })
+  })
+}
+
+function populateRightSidePanel(catagoryName, subCatagoryName) {
+  
+}
+
+function populateSubnav1Col2 (catagoryList) {
+  const section = document.getElementById('subnanav-list-col2');
+  while (section.firstChild) {
+    section.removeChild(section.lastChild);
+  }
+  catagoryList.forEach(catagory => {
+    const sp = document.createElement('span');
+    sp.innerText = catagory;
+    section.append(sp);
+  })
+}
+
+function populateSubnav1Col3 (catagoryList) {
+  const section = document.getElementById('subnanav-list-col3');
+  while (section.firstChild) {
+    section.removeChild(section.lastChild);
+  }
+  catagoryList.forEach(catagory => {
+    const sp = document.createElement('span');
+    sp.innerText = catagory;
+    section.append(sp);
+  })
+}
+
+function populateSubnav1Col4 (catagoryList) {
+  const section = document.getElementById('subnanav-list-col4');
+  while (section.firstChild) {
+    section.removeChild(section.lastChild);
+  }
+  catagoryList.forEach(catagory => {
+    const sp = document.createElement('span');
+    sp.innerText = catagory;
+    section.append(sp);
+  })
 }

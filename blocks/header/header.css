@@ -279,29 +279,43 @@ header nav .nav-tools {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  gap: none;
+  gap: 1%;
   height: auto;
-  width: 100%;
+  width: 100vw;
   background-color: var(--background-color);
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 10%;
+  padding-right: 10%;
+
+  box-shadow: 0 0.3rem 0.3rem 0 #d9d9d9;
+  border-top: solid #d9d9d9 1px;
 }
 
 .flex-item {
   display: flex;
-  flex-wrap: column;
+  flex-direction: column;
   gap: none;
-
-  background: tomato;
   padding: 5px;
-  width: 200px;
-  height: 150px;
+  width: 19%;
   margin-top: none;
-  line-height: 150px;
-  color: white;
-  font-weight: bold;
-  font-size: 3em;
-  text-align: center;
+  color: rgb(6, 1, 1);
+  font-size: 1.2rem;
+  text-align: left;
 }
 
 .hide-flex {
   display: none !important;
+}
+
+.col1-span {
+  margin-top: 0.5rem;
+}
+
+.col1-sp {
+  margin: 0.4rem;
+}
+
+.sp-mouseover {
+  background-color: rgb(221, 221, 219);
 }
