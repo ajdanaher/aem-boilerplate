@@ -1,3 +1,4 @@
+import { populateBaseballDetails } from './baseBall.js'; 
 
 export function checkAndCreateLeftNav () {
   const navWrapper = document.getElementsByClassName('nav-wrapper')[0];
@@ -87,11 +88,16 @@ function populateSubnav1Col1 (navCatagoryName, catagoryList) {
 
 async function populateRightSidePanel (navCatagory, leftSubNavCatagory) {
   try {
-    const [data, subCatagory] = await getRightSidePanelData(navCatagory, leftSubNavCatagory);
-    console.log(data);
-    console.log(subCatagory);
+    const {data, subCatagory} = await getRightSidePanelData(navCatagory, leftSubNavCatagory);
+
+    switch(leftSubNavCatagory.toLowerCase()) {
+      case 'baseball':
+        populateBaseballDetails(data, subCatagory);
+        break;
+    }
+    
   } catch (e) {
-    console.error (e);
+    console.error(e.message);
   }
 }
 
@@ -112,13 +118,16 @@ const getRightSidePanelData = (menu, submenu) => new Promise(async (resolve, rej
 
 const getRemoteData = url => new Promise(async(resolve, reject) => {
   try {
-    const p = await fetch(url);
-    const data = await p.json();
-    resolve(data);
+    const response = await fetch(url.toLowerCase());
+    if (response.ok && response.status === 200) {
+      const data = await response.json();
+      resolve(data);
+    } else {
+      throw new Error(`Response Status is ${response.status}. Status Text is ${response.statusText}, url is ${url}`);
+    }
   } catch (e) {
-    console.error(`url is ${url}.`);
     console.error(e.message);
-    reject(e);
+    reject(e.message);
   }
 });
 
@@ -147,41 +156,4 @@ const getSubCatagoryContent = data => new Promise (async (resolve, reject) => {
   }
   resolve(subCatagory);
 });
-
-function populateSubnav1Col2 (catagoryList) {
-  const section = document.getElementById('subnanav-list-col2');
-  while (section.firstChild) {
-    section.removeChild(section.lastChild);
-  }
-  catagoryList.forEach(catagory => {
-    const sp = document.createElement('span');
-    sp.innerText = catagory;
-    section.append(sp);
-  })
-}
-
-function populateSubnav1Col3 (catagoryList) {
-  const section = document.getElementById('subnanav-list-col3');
-  while (section.firstChild) {
-    section.removeChild(section.lastChild);
-  }
-  catagoryList.forEach(catagory => {
-    const sp = document.createElement('span');
-    sp.innerText = catagory;
-    section.append(sp);
-  })
-}
-
-function populateSubnav1Col4 (catagoryList) {
-  const section = document.getElementById('subnanav-list-col4');
-  while (section.firstChild) {
-    section.removeChild(section.lastChild);
-  }
-  catagoryList.forEach(catagory => {
-    const sp = document.createElement('span');
-    sp.innerText = catagory;
-    section.append(sp);
-  })
-}
-
 

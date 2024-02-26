@@ -320,3 +320,37 @@ header nav .nav-tools {
 .sp-mouseover {
   background-color: rgb(221, 221, 219);
 }
+
+/* baseball */
+.subnav-detail-section-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 1.2rem;
+}
+
+.section-margin-1 {
+  margin-left: 1rem;
+}
+
+.section-margin-2 {
+  margin-left: 2rem;
+  font-size: smaller;
+}
+
+.main-subnav {
+  font-size: larger;
+}
+
+.red-font {
+  color: red !important;
+}
+
+.subnav-detail-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  row-gap: 1rem;
+  width: 30%;
+  height: 26rem;
+}
