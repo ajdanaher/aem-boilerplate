@@ -58,28 +58,24 @@ function handleMouseoverOnNav (navElement) {
   for(const child of ul.children) {
     catagoryNames.push(child.innerText.trim());
   }
-  populateSubnav1Col1(catagoryNames);
-  populateSubnav1Col2(catagoryNames);
-  populateSubnav1Col3(catagoryNames);
-  populateSubnav1Col4(catagoryNames);
-
+  populateSubnav1Col1(name, catagoryNames);
 }
 
-function populateSubnav1Col1 (catagoryList) {
+function populateSubnav1Col1 (navCatagoryName, catagoryList) {
   const section = document.getElementById('subnanav-list-col1');
   while (section.firstChild) {
     section.removeChild(section.lastChild);
   }
-  catagoryList.forEach(catagory => {
+  catagoryList.forEach(subCatagoryName => {
     const sp = document.createElement('span');
-    sp.innerText = catagory;
+    sp.innerText = subCatagoryName;
     sp.classList.add('col1-sp');
     section.append(sp);
     sp.addEventListener('mouseover', eventTarget => {
       if(!isClassPresentOnElement(sp, 'sp-mouseover')) {
         sp.classList.add('sp-mouseover');
       }
-      populateRightSidePanel(catagoryName, subCatagoryName);
+      populateRightSidePanel(navCatagoryName, subCatagoryName);
     });
     sp.addEventListener('mouseleave', eventTarget => {
       if(isClassPresentOnElement(sp, 'sp-mouseover')) {
@@ -89,9 +85,68 @@ function populateSubnav1Col1 (catagoryList) {
   })
 }
 
-function populateRightSidePanel(catagoryName, subCatagoryName) {
-  
+async function populateRightSidePanel (navCatagory, leftSubNavCatagory) {
+  try {
+    const [data, subCatagory] = await getRightSidePanelData(navCatagory, leftSubNavCatagory);
+    console.log(data);
+    console.log(subCatagory);
+  } catch (e) {
+    console.error (e);
+  }
 }
+
+const getRightSidePanelData = (menu, submenu) => new Promise(async (resolve, reject) => {
+  try {
+    const fileName = `/helix-${menu}-${submenu}.json`;
+    const data = await getRemoteData(fileName);
+    const subCatagory = await getSubCatagoryContent(data);
+    resolve({
+      data,
+      subCatagory
+    });
+  } catch (e) {
+    console.error(e);
+    reject(e);
+  }
+});
+
+const getRemoteData = url => new Promise(async(resolve, reject) => {
+  try {
+    const p = await fetch(url);
+    const data = await p.json();
+    resolve(data);
+  } catch (e) {
+    console.error(`url is ${url}.`);
+    console.error(e.message);
+    reject(e);
+  }
+});
+
+const getSubCatagoryContent = data => new Promise (async (resolve, reject) => {
+  const subCatagory = [];
+  for(const item of data.data) {
+    let name = '';
+    if (item.Destination.indexOf(' | ') !== -1) {
+      name = item.Destination.split(' | ')[1];
+    } else if (item.Destination.search(/\/helix-.+.json$/) !== -1) {
+      name = item.Destination;
+    } else {
+      continue;
+    }
+
+    try {
+      const remoteData = await getRemoteData(name.toLowerCase());
+      subCatagory.push({
+        name,
+        'data': remoteData
+      });
+    } catch (e) {
+      console.error(e);
+      reject(e);
+    }
+  }
+  resolve(subCatagory);
+});
 
 function populateSubnav1Col2 (catagoryList) {
   const section = document.getElementById('subnanav-list-col2');
@@ -128,3 +183,5 @@ function populateSubnav1Col4 (catagoryList) {
     section.append(sp);
   })
 }
+
+
